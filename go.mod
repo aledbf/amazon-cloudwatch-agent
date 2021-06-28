@@ -35,12 +35,11 @@ replace golang.zx2c4.com/wireguard v0.0.20200121 => golang.zx2c4.com/wireguard v
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/Jeffail/gabs v1.4.0
-	github.com/aws/aws-sdk-go v1.30.15
+	github.com/aws/aws-sdk-go v1.35.24
 	github.com/bigkevmcd/go-configparser v0.0.0-20200217161103-d137835d2579
-	github.com/docker/docker v1.13.1
 	github.com/go-kit/kit v0.10.0
 	github.com/gobwas/glob v0.2.3
-	github.com/google/cadvisor v0.36.0
+	github.com/google/cadvisor v0.39.2
 	github.com/hashicorp/golang-lru v0.5.4
 	github.com/imdario/mergo v0.3.8 // indirect
 	github.com/influxdata/telegraf v0.0.0-00010101000000-000000000000
@@ -48,24 +47,25 @@ require (
 	github.com/influxdata/wlog v0.0.0-20160411224016-7c63b0a71ef8
 	github.com/kardianos/service v1.0.0
 	github.com/oklog/run v1.1.0
-	github.com/opencontainers/runc v1.0.0-rc10
+	github.com/opencontainers/runc v1.0.0
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.5.1
-	github.com/prometheus/common v0.9.1
+	github.com/prometheus/client_golang v1.11.0
+	github.com/prometheus/common v0.26.0
 	github.com/prometheus/prometheus v1.8.2-0.20200420081721-18254838fbe2
 	github.com/shirou/gopsutil v2.20.5+incompatible
-	github.com/stretchr/testify v1.5.1
+	github.com/stretchr/testify v1.6.1
 	github.com/xeipuuv/gojsonschema v1.2.0
-	golang.org/x/net v0.0.0-20200301022130-244492dfa37a
-	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a
-	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527
-	golang.org/x/text v0.3.2
+	golang.org/x/net v0.0.0-20210224082022-3d97a244fca7
+	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a
+	golang.org/x/sys v0.0.0-20210603081109-ebe580a85c40
+	golang.org/x/text v0.3.4
 	gopkg.in/fsnotify.v1 v1.4.7
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
-	gopkg.in/yaml.v2 v2.2.8
-	k8s.io/api v0.17.4
-	k8s.io/apimachinery v0.17.4
-	k8s.io/client-go v0.17.4
+	gopkg.in/yaml.v2 v2.4.0
+	k8s.io/api v0.21.2
+	k8s.io/apimachinery v0.21.2
+	k8s.io/client-go v0.21.2
 	k8s.io/klog v1.0.0
+	k8s.io/utils v0.0.0-20201110183641-67b214c5f920
 )
