@@ -6,7 +6,7 @@ package k8sclient
 import (
 	"testing"
 
-	"github.com/docker/docker/pkg/testutil/assert"
+	"github.com/stretchr/testify/assert"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -63,5 +63,5 @@ func TestReplicaSetClient_ReplicaSetToDeployment(t *testing.T) {
 		"cloudwatch-agent-statsd-d6487f8459": "cloudwatch-agent-statsd",
 	}
 	resultMap := client.ReplicaSetToDeployment()
-	assert.DeepEqual(t, resultMap, expectedMap)
+	assert.Equal(t, resultMap, expectedMap)
 }

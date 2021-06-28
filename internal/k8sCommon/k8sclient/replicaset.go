@@ -4,6 +4,7 @@
 package k8sclient
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -99,7 +100,7 @@ func (c *replicaSetClient) Init() {
 		return
 	}
 
-	if _, err := Get().ClientSet.AppsV1().ReplicaSets(metav1.NamespaceAll).List(metav1.ListOptions{}); err != nil {
+	if _, err := Get().ClientSet.AppsV1().ReplicaSets(metav1.NamespaceAll).List(context.Background(), metav1.ListOptions{}); err != nil {
 		panic(fmt.Sprintf("Cannot list ReplicaSet. err: %v", err))
 	}
 
@@ -149,10 +150,10 @@ func transformFuncReplicaSet(obj interface{}) (interface{}, error) {
 func createReplicaSetListWatch(client kubernetes.Interface, ns string) cache.ListerWatcher {
 	return &cache.ListWatch{
 		ListFunc: func(opts metav1.ListOptions) (runtime.Object, error) {
-			return client.AppsV1().ReplicaSets(ns).List(opts)
+			return client.AppsV1().ReplicaSets(ns).List(context.Background(), opts)
 		},
 		WatchFunc: func(opts metav1.ListOptions) (watch.Interface, error) {
-			return client.AppsV1().ReplicaSets(ns).Watch(opts)
+			return client.AppsV1().ReplicaSets(ns).Watch(context.Background(), opts)
 		},
 	}
 }

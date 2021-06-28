@@ -4,6 +4,7 @@
 package k8sclient
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -12,7 +13,7 @@ import (
 
 	"github.com/aws/amazon-cloudwatch-agent/internal/containerinsightscommon"
 	"github.com/aws/amazon-cloudwatch-agent/internal/k8sCommon/k8sutil"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -185,10 +186,10 @@ func transformFuncEndpoint(obj interface{}) (interface{}, error) {
 func createEndpointListWatch(client kubernetes.Interface, ns string) cache.ListerWatcher {
 	return &cache.ListWatch{
 		ListFunc: func(opts metav1.ListOptions) (runtime.Object, error) {
-			return client.CoreV1().Endpoints(ns).List(opts)
+			return client.CoreV1().Endpoints(ns).List(context.Background(), opts)
 		},
 		WatchFunc: func(opts metav1.ListOptions) (watch.Interface, error) {
-			return client.CoreV1().Endpoints(ns).Watch(opts)
+			return client.CoreV1().Endpoints(ns).Watch(context.Background(), opts)
 		},
 	}
 }

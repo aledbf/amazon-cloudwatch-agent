@@ -4,13 +4,14 @@
 package k8sclient
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
 	"sync"
 	"time"
 
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -118,10 +119,10 @@ func transformFuncPod(obj interface{}) (interface{}, error) {
 func createPodListWatch(client kubernetes.Interface, ns string) cache.ListerWatcher {
 	return &cache.ListWatch{
 		ListFunc: func(opts metav1.ListOptions) (runtime.Object, error) {
-			return client.CoreV1().Pods(ns).List(opts)
+			return client.CoreV1().Pods(ns).List(context.Background(), opts)
 		},
 		WatchFunc: func(opts metav1.ListOptions) (watch.Interface, error) {
-			return client.CoreV1().Pods(ns).Watch(opts)
+			return client.CoreV1().Pods(ns).Watch(context.Background(), opts)
 		},
 	}
 }

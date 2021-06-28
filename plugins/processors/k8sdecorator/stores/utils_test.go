@@ -4,8 +4,9 @@
 package stores
 
 import (
-	"github.com/docker/docker/pkg/testutil/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUtils_parseDeploymentFromReplicaSet(t *testing.T) {

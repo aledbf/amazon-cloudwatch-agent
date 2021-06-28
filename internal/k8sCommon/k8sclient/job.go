@@ -4,6 +4,7 @@
 package k8sclient
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -100,7 +101,7 @@ func (c *jobClient) Init() {
 		return
 	}
 
-	if _, err := Get().ClientSet.BatchV1().Jobs(metav1.NamespaceAll).List(metav1.ListOptions{}); err != nil {
+	if _, err := Get().ClientSet.BatchV1().Jobs(metav1.NamespaceAll).List(context.Background(), metav1.ListOptions{}); err != nil {
 		panic(fmt.Sprintf("Cannot list Job. err: %v", err))
 	}
 
@@ -150,10 +151,10 @@ func transformFuncJob(obj interface{}) (interface{}, error) {
 func createJobListWatch(client kubernetes.Interface, ns string) cache.ListerWatcher {
 	return &cache.ListWatch{
 		ListFunc: func(opts metav1.ListOptions) (runtime.Object, error) {
-			return client.BatchV1().Jobs(ns).List(opts)
+			return client.BatchV1().Jobs(ns).List(context.Background(), opts)
 		},
 		WatchFunc: func(opts metav1.ListOptions) (watch.Interface, error) {
-			return client.BatchV1().Jobs(ns).Watch(opts)
+			return client.BatchV1().Jobs(ns).Watch(context.Background(), opts)
 		},
 	}
 }

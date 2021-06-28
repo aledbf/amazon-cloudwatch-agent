@@ -6,7 +6,7 @@ package k8sclient
 import (
 	"testing"
 
-	"github.com/docker/docker/pkg/testutil/assert"
+	"github.com/stretchr/testify/assert"
 	batchv1 "k8s.io/api/batch/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -55,5 +55,5 @@ func TestJobClient_JobToCronJob(t *testing.T) {
 		"job-7f8459d648": "cronjobA",
 	}
 	resultMap := client.JobToCronJob()
-	assert.DeepEqual(t, resultMap, expectedMap)
+	assert.Equal(t, resultMap, expectedMap)
 }

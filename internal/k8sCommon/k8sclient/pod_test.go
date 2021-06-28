@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws/awsutil"
-	"github.com/docker/docker/pkg/testutil/assert"
-	"k8s.io/api/core/v1"
+	"github.com/stretchr/testify/assert"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -181,5 +181,5 @@ func TestPodClient_NamespaceToRunningPodNum(t *testing.T) {
 	}
 	resultMap := client.NamespaceToRunningPodNum()
 	log.Printf("NamespaceToRunningPodNum (len=%v): %v", len(resultMap), awsutil.Prettify(resultMap))
-	assert.DeepEqual(t, resultMap, expectedMap)
+	assert.Equal(t, resultMap, expectedMap)
 }
