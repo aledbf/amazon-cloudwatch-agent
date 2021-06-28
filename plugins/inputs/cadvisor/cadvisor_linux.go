@@ -12,18 +12,19 @@ import (
 	"time"
 
 	. "github.com/aws/amazon-cloudwatch-agent/internal/containerinsightscommon"
+
 	"github.com/google/cadvisor/cache/memory"
 	cadvisormetrics "github.com/google/cadvisor/container"
 	"github.com/google/cadvisor/container/containerd"
 	"github.com/google/cadvisor/container/crio"
 	"github.com/google/cadvisor/container/docker"
-	"github.com/google/cadvisor/container/mesos"
 	"github.com/google/cadvisor/container/systemd"
 	cinfo "github.com/google/cadvisor/info/v1"
 	"github.com/google/cadvisor/manager"
 	"github.com/google/cadvisor/utils/sysfs"
 	"github.com/influxdata/telegraf"
 	"github.com/influxdata/telegraf/plugins/inputs"
+	"k8s.io/utils/pointer"
 )
 
 // The amount of time for which to keep stats in memory.
@@ -119,8 +120,14 @@ func (c *Cadvisor) initManager() error {
 		cgroupRoots = []string{"/kubepods"}
 	}
 
+	duration := maxHousekeepingInterval
+	housekeepingConfig := manager.HouskeepingConfig{
+		Interval:     &duration,
+		AllowDynamic: pointer.BoolPtr(allowDynamicHousekeeping),
+	}
+
 	// Create and start the cAdvisor container manager.
-	m, err := manager.New(memory.New(statsCacheDuration, nil), sysFs, maxHousekeepingInterval, allowDynamicHousekeeping, includedMetrics, http.DefaultClient, cgroupRoots)
+	m, err := manager.New(memory.New(statsCacheDuration, nil), sysFs, housekeepingConfig, includedMetrics, http.DefaultClient, cgroupRoots, "")
 	if err != nil {
 		log.Println("E! manager allocate failed, ", err)
 		return err
@@ -128,7 +135,6 @@ func (c *Cadvisor) initManager() error {
 	cadvisormetrics.RegisterPlugin("containerd", containerd.NewPlugin())
 	cadvisormetrics.RegisterPlugin("crio", crio.NewPlugin())
 	cadvisormetrics.RegisterPlugin("docker", docker.NewPlugin())
-	cadvisormetrics.RegisterPlugin("mesos", mesos.NewPlugin())
 	cadvisormetrics.RegisterPlugin("systemd", systemd.NewPlugin())
 	c.manager = m
 	err = c.manager.Start()
